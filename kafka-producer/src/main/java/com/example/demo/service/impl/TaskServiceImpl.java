@@ -22,22 +22,21 @@ public class TaskServiceImpl implements TaskService {
     private final ModelMapper modelMapper;
     private final TaskRequestProducer producer;
 
-    public Task createTask(Task task) {
+    public Task createTask(Task task) throws JsonProcessingException {
+        producer.sendMessage(task);
         return repository.save(task);
     }
 
-    public String integrarTask(TaskDTO taskDTO) throws JsonProcessingException {
-        return producer.sendMessage(taskDTO);
-    }
 
     public Optional<Task> taskById(Long id) {
         return repository.findById(id);
     }
 
-    public Optional<Task> updateTask(Long id, Task updatedTask) {
+    public Optional<Task> updateTask(Long id, Task updatedTask) throws JsonProcessingException {
         Task existingTask = getExistingTask(id);
         modelMapper.getConfiguration().setSkipNullEnabled(true);
         modelMapper.map(updatedTask, existingTask);
+        producer.sendMessage(updatedTask);
         return Optional.of(repository.save(existingTask));
     }
 
@@ -45,7 +44,7 @@ public class TaskServiceImpl implements TaskService {
         return repository.findAll();
     }
 
-    public void deleteTask(Long id) {
+    public void deleteTask(Long id)  {
         Task existingTask = getExistingTask(id);
         repository.deleteById(id);
     }
