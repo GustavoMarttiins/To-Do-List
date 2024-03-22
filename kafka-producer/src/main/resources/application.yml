@@ -1,0 +1,23 @@
+server:
+  port: 8080
+
+topicos:
+  task:
+      topic: "task.topic.v1"
+
+spring:
+  application:
+    name: to.do.list
+  jpa:
+    hibernate:
+      ddl-auto: update
+  datasource:
+    url: jdbc:mysql://LocalHost:3306/db_to_do_list?createDatabaseIfNotExist=true&serverTimezone=UTC&useSSl=false
+    username: root
+    password: root
+    show-sql: true
+  kafka:
+    producer:
+      bootstrap-servers: localhost:9092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer

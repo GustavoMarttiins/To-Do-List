@@ -1,7 +1,9 @@
 package com.example.demo.controllers;
 
+import com.example.demo.dto.TaskDTO;
 import com.example.demo.entity.Task;
 import com.example.demo.service.impl.TaskServiceImpl;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,6 +24,11 @@ public class TaskController {
     public List<Task> getAllTasks() {
         List<Task> tasks = taskServiceImpl.allTasks();
         return new ResponseEntity<>(tasks, HttpStatus.OK).getBody();
+    }
+
+    @PostMapping("/test")
+    public String testar (@RequestBody TaskDTO taskDTO) throws JsonProcessingException {
+        return taskServiceImpl.integrarTask(taskDTO);
     }
 
     @GetMapping("/{id}")
