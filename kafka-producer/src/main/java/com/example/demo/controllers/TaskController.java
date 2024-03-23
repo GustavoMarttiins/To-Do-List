@@ -1,9 +1,7 @@
 package com.example.demo.controllers;
 
-import com.example.demo.dto.TaskDTO;
 import com.example.demo.entity.Task;
 import com.example.demo.service.impl.TaskServiceImpl;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,19 +31,19 @@ public class TaskController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Task> createTask(@Valid @RequestBody Task task) throws JsonProcessingException {
+    public ResponseEntity<Task> createTask(@Valid @RequestBody Task task) {
         Task createdTask = taskServiceImpl.createTask(task);
         return new ResponseEntity<>(createdTask, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Optional<Task>> updateTask(@PathVariable Long id, @Valid @RequestBody Task task) throws JsonProcessingException {
+    public ResponseEntity<Optional<Task>> updateTask(@PathVariable Long id, @Valid @RequestBody Task task) {
         Optional<Task> updatedTask = taskServiceImpl.updateTask(id, task);
         return new ResponseEntity<Optional<Task>>(updatedTask, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteTask(@PathVariable Long id) throws JsonProcessingException {
+    public ResponseEntity<Void> deleteTask(@PathVariable Long id) {
         taskServiceImpl.deleteTask(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
