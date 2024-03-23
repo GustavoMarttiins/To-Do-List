@@ -14,7 +14,6 @@ services:
     networks:
       - todo
 
-
   kafka:
     image: confluentinc/cp-kafka:latest
     networks:
@@ -40,38 +39,15 @@ services:
       - 10000:9000
     environment:
       KAFKA_BROKERCONNECT: kafka:3000
-
   mysql:
-    image: quay.io/debezium/example-mysql:2.4
+    image: mysql:8.3
     container_name: mysql
     ports:
-      - 3390:3390
+      - 3390:3306
     networks:
       - todo
     environment:
       MYSQL_ROOT_PASSWORD: debezium
       MYSQL_USER: mysqluser
       MYSQL_PASSWORD: mysqlpw
-
-  connect:
-    image: quay.io/debezium/connect:2.4
-    container_name: connect
-    ports:
-      - "8083:8083"
-    networks:
-      - todo
-    environment:
-      GROUP_ID: "group_id"
-      CONFIG_STORAGE_TOPIC: my_connect_configs
-      OFFSET_STORAGE_TOPIC: my_connect_offsets
-      BOOTSTRAP_SERVERS: kafka:3000
-      CONNECT_REST_ADVERTISED_HOST_NAME: connect
-      CONNECT_LOG4J_ROOT_LOGLEVEL: INFO
-      CONNECT_LOG4J_LOGGERS: org.apache.kafka.connect.runtime.rest=WARN,org.reflections=ERROR
-    volumes:
-      - ./mysql-connector-config.json:/kafka/mysql-connector-config.json
-    depends_on:
-      - kafka
-      - mysql
-      - zookeeper
-    command: [ "start", "mysql", "-c", "/kafka/mysql-connector-config.json" ]
+      MYSQL_DATABASE: db_to_do_list

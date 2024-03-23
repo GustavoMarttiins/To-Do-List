@@ -12,10 +12,11 @@ spring:
     hibernate:
       ddl-auto: update
   datasource:
-    url: jdbc:mysql://LocalHost:3306/db_to_do_list?createDatabaseIfNotExist=true&serverTimezone=UTC&useSSl=false
-    username: root
-    password: root
+    url: jdbc:mysql://localhost:3390/db_to_do_list?createDatabaseIfNotExist=true&serverTimezone=UTC&useSSl=false
+    username: mysqluser
+    password: mysqlpw
     show-sql: true
+    driver-class-name: com.mysql.cj.jdbc.Driver
   kafka:
     producer:
       bootstrap-servers: localhost:9092
